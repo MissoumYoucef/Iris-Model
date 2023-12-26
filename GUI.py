@@ -19,11 +19,14 @@ class MyGUI():
         app.rowconfigure((0,2), weight=2)
         
         #Title Page
-        label_page=ctk.CTkLabel(app, text="Iris Model", font=("Arial", 26))
+        home_frame=ctk.CTkFrame(app,corner_radius=30)
+        label_page=ctk.CTkLabel(home_frame, text="Iris Model", font=("Arial", 26))
+        label_page.grid_configure(column=2, row=0, padx=20)
         home_image=Image.open("home.png")
-        home=ctk.CTkLabel(app, image=ctk.CTkImage(home_image, size=(100,100)))
+        home=ctk.CTkLabel(home_frame, image=ctk.CTkImage(home_image, size=(100,100)),)
         home.grid_configure(column=1, row=0)
-        label_page.grid_configure(column=2, row=0,)
+        
+        home_frame.grid_configure(row=0, column=2, sticky="we")
 
         #label_insert=ctk.CTkLabel(app, text="Insert a CSV file", font=("Arial", 18)) #Text 
         #label_insert.grid_configure(row=1, column=1, sticky='nw',  padx=20, pady=20)
