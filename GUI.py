@@ -60,10 +60,20 @@ class MyGUI():
         #btn_result.place(relx=200,rely=200, anchor="center")
         btn_result.grid_configure(column=3, row=2)
 
-        #DropDown List    
-        self.list= ctk.CTkComboBox(app, values=["SVM","TensorFlow","KNN"], command=self.change_value)
+        #Frame Model
+        model_frame= ctk.CTkFrame(app, height=50, corner_radius=10)
+
+        #DropDown Model    
+        self.list= ctk.CTkComboBox(model_frame, values=["SVM","TensorFlow","KNN"],command=self.change_option)
         self.list.grid_configure(row=2, column=2)
+
+        #DropDown Kernel Option
         
+        self.svm_values=["Linear","Rbf","Sigmoid"]
+        self.option_list= ctk.CTkComboBox(model_frame, values=self.svm_values, command=self.change_option)
+        self.option_list.grid_configure(row=3, column=2, pady=20)
+
+        model_frame.grid_configure(row=2, column=2, )
         
         #Result Label
         self.result = tk.StringVar()
@@ -91,8 +101,19 @@ class MyGUI():
         #else:
             messagebox.showinfo(title="Message", message=self.algorithm.get())
     
-    def change_value(self, value):
-        print(f"Selected value {value}")
+    def change_option(self, value):
+        algorithm=self.list.get()
+        print(f"Selected Model: {value}")
+        if algorithm == "SVM":
+            
+            self.option_list.configure(values=self.svm_values)
+            #self.option_list.set("")
+        elif algorithm == "KNN":
+            knn_values=["1","3","5","7","9"]
+            self.option_list.configure(values=knn_values)
+            #self.option_list.set("")
+        else:
+            print("Error")
 
     def browse_file(self):
         # Open a file dialog to get the file path
@@ -115,15 +136,13 @@ class MyGUI():
 
         
     def show_result(self):
-        # Display the model choosed
+        # Get the model choosed
         algorithm=self.list.get()
-        
+        option=self.option_list.get()
         if algorithm == "SVM":
-            print(algorithm)
-            accuracy_result=model.svm()
+            accuracy_result=model.svm(option.lower())
         elif algorithm == "KNN":
-            print(algorithm)
-            accuracy_result=model.knn()
+            accuracy_result=model.knn(int(option))
         else:
             print("Error")
         # Display the accuracy

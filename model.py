@@ -48,8 +48,8 @@ x_train, x_test, y_train, y_test= split_df_v2()
 
 #--- SVM ---
 
-def svm():
-    svm_model = SVC(kernel='linear', )
+def svm(k="linear"):
+    svm_model = SVC(kernel=k, )
     svm_model = svm_model.fit(x_train, y_train)
     y_pred = svm_model.predict(x_test)
     print(accuracy_score(y_test,y_pred))
@@ -62,9 +62,9 @@ def svm():
 
 
 #--- KNN ---
-def knn():
+def knn(nbr_neighbor=3):
     from sklearn.neighbors import KNeighborsClassifier
-    knn_model = KNeighborsClassifier(n_neighbors=3)
+    knn_model = KNeighborsClassifier(n_neighbors=nbr_neighbor)
     knn_model = knn_model.fit(x_train,y_train)
     y_pred_knn = knn_model.predict(x_test)
     print(accuracy_score(y_test,y_pred_knn))
