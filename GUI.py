@@ -56,14 +56,14 @@ class MyGUI():
 
 
         #Result Button
-        btn_result=ctk.CTkButton(app, text="Result", font=("Arial", 18), command=self.show_path)
+        btn_result=ctk.CTkButton(app, text="Result", font=("Arial", 18), command=self.show_result)
         #btn_result.place(relx=200,rely=200, anchor="center")
         btn_result.grid_configure(column=3, row=2)
 
-        #DropDown List
-        self.algorithm=ctk.StringVar()
-        list= ctk.CTkComboBox(app, values=["SVM","TensorFlow","KNN"], variable=self.algorithm, command=self.change_value)
-        list.grid_configure(row=2, column=2)
+        #DropDown List    
+        self.list= ctk.CTkComboBox(app, values=["SVM","TensorFlow","KNN"], command=self.change_value)
+        self.list.grid_configure(row=2, column=2)
+        
         
         #Result Label
         self.result = tk.StringVar()
@@ -81,8 +81,7 @@ class MyGUI():
         #check = tk.Checkbutton(app, text="Show", font=("Arial", 16), variable=self.valuecheck)
         #check.pack(padx=10, pady=10)
 
-        result=model.svm()
-        print(result)
+        
 
         app.mainloop()
     
@@ -100,21 +99,37 @@ class MyGUI():
         file_path = tk.filedialog.askopenfilename()
 
         if not file_path:
-            print("No file selected.")
+            error="Error: No file selected."
+            self.file_path.set(error)
+            print(error)
             return
 
         # Check if the file has a .csv extension
         if not file_path.lower().endswith('.csv'):
-            print("Error not CSV")
+            error="Error: It isn't a CSV file"
+            self.file_path.set(error)
+            print(error)
         else:
             self.file_path.set(file_path)
             print("CSV file")
 
         
-    def show_path(self):
-        # Display the selected file path
-        self.result.set("Accuracy = 90%")
-        print("Selected File Path:", self.file_path.get())
+    def show_result(self):
+        # Display the model choosed
+        algorithm=self.list.get()
+        
+        if algorithm == "SVM":
+            print(algorithm)
+            accuracy_result=model.svm()
+        elif algorithm == "KNN":
+            print(algorithm)
+            accuracy_result=model.knn()
+        else:
+            print("Error")
+        # Display the accuracy
+        self.result.set(f"Accuracy = {accuracy_result*100:.2f}%")
+        
+        #print("Selected File Path:", self.file_path.get())
 
 MyGUI()
 
