@@ -2,6 +2,9 @@ import tkinter as tk
 import customtkinter as ctk
 from tkinter import messagebox
 from PIL import Image
+import subprocess
+import importlib.util
+import model
 
 class MyGUI():
     def __init__(self):
@@ -77,6 +80,9 @@ class MyGUI():
         #valuecheck = tk.IntVar() # valeur de checkBox
         #check = tk.Checkbutton(app, text="Show", font=("Arial", 16), variable=self.valuecheck)
         #check.pack(padx=10, pady=10)
+
+        result=model.svm()
+        print(result)
 
         app.mainloop()
     
