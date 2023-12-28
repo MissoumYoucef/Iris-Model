@@ -66,9 +66,10 @@ class MyGUI():
         #DropDown Model    
         self.list= ctk.CTkComboBox(model_frame, values=["SVM","TensorFlow","KNN"],command=self.change_option)
         self.list.grid_configure(row=2, column=2)
-
-        #DropDown Kernel Option
         
+        text=ctk.CTkLabel(model_frame, text="Choose an algorithm and options", font=("Arial", 16))
+        text.grid_configure(row=1,column=2, padx=10, pady=10)
+        #DropDown Kernel Option
         self.svm_values=["Linear","Rbf","Sigmoid"]
         self.option_list= ctk.CTkComboBox(model_frame, values=self.svm_values, command=self.change_option)
         self.option_list.grid_configure(row=3, column=2, pady=20)
